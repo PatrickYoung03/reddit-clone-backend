@@ -1,12 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
+
 const {
   createPost,
   getUsers,
   createUser,
-  getUserByUsername
+  getUserByUsername, getAllPosts, getByTitle
 } = require("../models/index");
+
 
 const { query } = require("../db/index");
 
@@ -20,6 +22,17 @@ router.post("/posts", async (req, res) => {
   }
   res.json({ success: false });
 });
+
+
+//get all posts and posts by search
+router.get("/posts", async (req, res) => {
+  const { search } = req.query;
+  if (search) {
+    const result = await getByTitle(search);
+    res.json(result);
+  }
+  const result = await getAllPosts();
+  res.json(result);
 
 // get all users
 router.get("/users", async (req, res) => {
@@ -44,6 +57,7 @@ router.get("/users", async (req, res) => {
   const { search } = req.query;
   const data = await getUserByUsername(search);
   res.json({ payoad: data, success: true });
+
 });
 
 module.exports = router;

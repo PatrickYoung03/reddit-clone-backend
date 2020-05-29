@@ -8,7 +8,8 @@ async function createPostTable() {
         content TEXT,
         votes INTEGER,
         comments TEXT[],
-        userID INTEGER
+        userID INTEGER,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
     `);
   console.log(res);
@@ -18,7 +19,7 @@ async function createUsersTable() {
   const res = await query(` CREATE TABLE IF NOT EXISTS redditUsers (
         userID SERIAL PRIMARY KEY,
         username TEXT,
-        timestamp TIMESTAMP,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         password TEXT
     )`);
 }

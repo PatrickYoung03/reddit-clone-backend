@@ -15,6 +15,16 @@ async function createPost({ title, content, votes, comments, userID }) {
   return data.rows[0];
 }
 
+
+async function getAllPosts() {
+  const data = await query(` SELECT * FROM posts `);
+  return data.rows;
+}
+
+async function getByTitle(search) {
+  const data = await query(
+    `SELECT * FROM posts WHERE title ILIKE '%' || $1 || '%'`,[search]}
+
 async function getAllUsers() {
   const data = await query(`select * FROM users`);
   return data.rows;
@@ -35,6 +45,7 @@ async function getUserByUsername({ search }) {
   const data = await query(
     `
     SELECT * FROM redditUsers WHERE username ILIKE '%' || $1 || '%'`,
+
     [search]
   );
   return data.rows;
@@ -42,7 +53,12 @@ async function getUserByUsername({ search }) {
 
 module.exports = {
   createPost,
+
+  getAllPosts,
+  getByTitle,
+
   getAllUsers,
   createUser,
   getUserByUsername
+
 };
