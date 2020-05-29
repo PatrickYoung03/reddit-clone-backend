@@ -53,6 +53,19 @@ async function getUserByUsername({ search }) {
   return data.rows;
 }
 
+async function updatePost({ title, content, votes, comments, userID }) {
+  const data = await query(
+    `UPDATE posts 
+SET
+title = COALESCE($1, title),
+content = COALESCE($2, content),
+votes = COALESCE($3, votes),
+comments = COALESCE($4, comments),
+WHERE userID = $5`,
+    [title, content, votes, comments, userID]
+  );
+}
+
 module.exports = {
   createPost,
 
@@ -62,4 +75,5 @@ module.exports = {
   getAllUsers,
   createUser,
   getUserByUsername,
+  updatePost
 };

@@ -8,6 +8,7 @@ const {
   getUserByUsername,
   getAllPosts,
   getByTitle,
+  updatePost
 } = require("../models/index");
 
 const { query } = require("../db/index");
@@ -57,6 +58,13 @@ router.get("/users", async (req, res) => {
   const { search } = req.query;
   const data = await getUserByUsername(search);
   res.json({ payoad: data, success: true });
+});
+
+router.patch("/users/:id", async (req, res) => {
+  const { id } = req.params;
+  const { body } = req;
+  const update = await updatePosts(body, id);
+  res.send(`you have updated the post ${body.title}`);
 });
 
 module.exports = router;
