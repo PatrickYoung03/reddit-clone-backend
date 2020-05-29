@@ -60,11 +60,14 @@ router.get("/users", async (req, res) => {
   res.json({ payoad: data, success: true });
 });
 
-router.patch("/users/:id", async (req, res) => {
+router.patch("/posts/:id", async (req, res) => {
   const { id } = req.params;
   const { body } = req;
-  const update = await updatePosts(body, id);
-  res.send(`you have updated the post ${body.title}`);
+  console.log(body, id);
+
+  const update = await updatePost({ ...body, id });
+  console.log(update);
+  res.json({ success: true, message: "you have updated a post" });
 });
 
 module.exports = router;
