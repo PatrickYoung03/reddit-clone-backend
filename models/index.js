@@ -15,6 +15,21 @@ async function createPost({ title, content, votes, comments, userID }) {
   return data.rows[0];
 }
 
+async function getAllPosts() {
+  const data = await query(` SELECT * FROM posts `);
+  return data.rows;
+}
+
+async function getByTitle(search) {
+  const data = await query(
+    `SELECT * FROM posts WHERE title ILIKE '%' || $1 || '%'`,
+    [search]
+  );
+  return data.rows;
+}
+
 module.exports = {
-  createPost
+  createPost,
+  getAllPosts,
+  getByTitle,
 };
