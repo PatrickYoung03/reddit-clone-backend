@@ -15,6 +15,34 @@ async function createPost({ title, content, votes, comments, userID }) {
   return data.rows[0];
 }
 
+async function getAllUsers() {
+  const data = await query(`select * FROM users`);
+  return data.rows;
+}
+
+async function createUser({ username, password }) {
+  const data = await query(
+    ` INSERT INTO redditUsers (
+        username,
+        password
+    ) VALUES ( $1, $2) RETURNING username`,
+    [username, password]
+  );
+  return data.rows[0];
+}
+
+async function getUserByUsername({ search }) {
+  const data = await query(
+    `
+    SELECT * FROM redditUsers WHERE username ILIKE '%' || $1 || '%'`,
+    [search]
+  );
+  return data.rows;
+}
+
 module.exports = {
-  createPost
+  createPost,
+  getAllUsers,
+  createUser,
+  getUserByUsername
 };
