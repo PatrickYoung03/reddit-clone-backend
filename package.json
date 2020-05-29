@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node -r dotenv/config app.js",
-    "createTable": "node -r dotenv/config ./db/scripts/create.js"
+    "createTable": "node -r dotenv/config ./db/scripts/create.js",
+    "dropTable": "node -r dotenv/config ./db/scripts/drop.js"
   },
   "author": "",
   "license": "ISC",
