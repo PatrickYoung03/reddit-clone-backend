@@ -25,6 +25,7 @@ async function getByTitle(search) {
     `SELECT * FROM posts WHERE title ILIKE '%' || $1 || '%'`,
     [search]
   );
+  return data.rows;
 }
 
 async function getAllUsers() {
